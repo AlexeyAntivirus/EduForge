@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<Configuration name="MainConfiguration" status="WARN" dest="err">
+	<Properties>
+		<Property name="LogEventDateTimeFormat">in %d{dd.MM.yyyy} at %d{hh:mm:ss.SSS}</Property>
+		<Property name="LogEventSourceFormat">Source: [%t] %c.%M:[%L]</Property>
+		<Property name="MessageFormat">Message: "%msg"</Property>
+		<Property name="ExceptionFormat">%throwable</Property>
+
+		<Property name="LogFilesLocation">logs</Property>
+		<Property name="LogArchivesLocation">archives</Property>
+	</Properties>
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout>
+				<pattern>[%level] ${LogEventDateTimeFormat}%n${LogEventSourceFormat}%n${MessageFormat}%n${ExceptionFormat}%n</pattern>
+			</PatternLayout>
+		</Console>
+		<RollingRandomAccessFile name="RollingRandomAccessFile"
+		                         fileName="${LogFilesLocation}/current.log"
+		                         filePattern="${LogFilesLocation}/${LogArchivesLocation}/Log Archive №%i from %d{dd.MM.yyyy}.log.gz">
+			<PatternLayout>
+				<pattern>[%level] ${LogEventDateTimeFormat}%n${LogEventSourceFormat}%n${MessageFormat}%n${ExceptionFormat}%n</pattern>
+			</PatternLayout>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="200 MB"/>
+			</Policies>
+			<DefaultRolloverStrategy max="10"/>
+		</RollingRandomAccessFile>
+	</Appenders>
+	<Loggers>
+		<Logger name="org.springframework" level="debug" additivity="false">
+			<AppenderRef ref="Console"/>
+			<AppenderRef ref="RollingRandomAccessFile"/>
+		</Logger>
+		<Logger name="com.revex.eduforge" level="debug" additivity="false">
+			<AppenderRef ref="Console"/>
+			<AppenderRef ref="RollingRandomAccessFile"/>
+		</Logger>
+		<Root level="debug">
+			<AppenderRef ref="Console"/>
+			<AppenderRef ref="RollingRandomAccessFile"/>
+		</Root>
+	</Loggers>
+</Configuration>
