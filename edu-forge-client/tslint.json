@@ -26,7 +26,8 @@
 		"trailing-comma": false,
 		"no-trailing-whitespace": false,
 		"eofline": false,
-		"no-empty-interface": false
+		"no-empty-interface": false,
+		"no-var-requires": false
 	},
 	"jsRules": {
 		"quotemark": [
